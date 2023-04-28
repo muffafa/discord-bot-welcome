@@ -3,7 +3,9 @@ const {token} = process.env;
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
 
-const client = new Client({ intents: GatewayIntentBits.Guilds });
+const { Guilds, GuildMessages, GuildMessageReactions} = GatewayIntentBits
+
+const client = new Client({ intents: [Guilds, GuildMessages, GuildMessageReactions] }); // 32767 code accepts all intents
 client.commands = new Collection();
 client.buttons = new Collection();
 client.selectMenus = new Collection();
