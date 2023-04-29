@@ -1,11 +1,14 @@
 require("dotenv").config();
-const {token} = process.env;
+const { token, databaseToken } = process.env;
+const { connect } = require("mongoose");
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const fs = require("fs");
 
-const { Guilds, GuildMessages, GuildMessageReactions} = GatewayIntentBits
+const { Guilds, GuildMessages, GuildMessageReactions } = GatewayIntentBits;
 
-const client = new Client({ intents: [Guilds, GuildMessages, GuildMessageReactions] }); // 32767 code accepts all intents
+const client = new Client({
+  intents: [Guilds, GuildMessages, GuildMessageReactions],
+}); // 32767 code accepts all intents
 client.commands = new Collection();
 client.buttons = new Collection();
 client.selectMenus = new Collection();
@@ -25,3 +28,5 @@ client.handleEvents();
 client.handleCommands();
 client.handleComponents();
 client.login(token);
+
+(async () => await connect(databaseToken).catch(console.error))();
